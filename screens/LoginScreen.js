@@ -2,17 +2,13 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-nativ
 import { useNavigation } from '@react-navigation/native'
 import { useState, useEffect } from 'react'
 
-export function RegisterScreen( props ){
+export function LoginScreen( props ){
 	const navigation = useNavigation()
-
-	const gotoLogin = () => {
-		navigation.navigate("Login")
-	}
 
 	return (
 		<View style={ styles.homeScreen }>
 			<View style={styles.form}>
-				<Text style={ styles.title}>Sign up</Text>
+				<Text style={ styles.title}>Sign in</Text>
 			<Text>Email</Text>
 			<TextInput style={ styles.input}/>
 			<Text>Password</Text>
@@ -20,7 +16,7 @@ export function RegisterScreen( props ){
 			<TouchableOpacity style={ styles.button}>
 				<Text style={styles.buttonText}>Sign up</Text>
 			</TouchableOpacity>
-			<TouchableOpacity style={ styles.loginLink} onPress={ () => gotoLogin() }>
+			<TouchableOpacity style={ styles.loginLink}>
 				<Text style={ styles.loginLinkText}>Already have an account? Sign in</Text>
 			</TouchableOpacity>
 			</View>

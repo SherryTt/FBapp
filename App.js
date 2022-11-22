@@ -9,6 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 //screen
 import { HomeScreen } from './screens/HomeScreen';
 import { RegisterScreen } from './screens/RegisterScreen';
+import { LoginScreen } from './screens/LoginScreen';
 
 const FBapp = initializeApp(firebaseConfig);
 const Stack = createNativeStackNavigator();
@@ -17,8 +18,9 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen}/>
         <Stack.Screen name="Register" component={RegisterScreen}/>
+        <Stack.Screen name="Home" component={HomeScreen}/>
+        <Stack.Screen name="Login" component={LoginScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
