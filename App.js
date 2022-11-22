@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 //firebase
 import { firebaseConfig  } from './config/Config';
 import { initializeApp } from "firebase/app";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 //navigation
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -12,13 +13,26 @@ import { RegisterScreen } from './screens/RegisterScreen';
 import { LoginScreen } from './screens/LoginScreen';
 
 const FBapp = initializeApp(firebaseConfig);
+const FBauth = getAuth( FBapp );
+
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  //function to sign up user
+  const signUpHandler = ( email, password ) => {
+    createUserWithEmailAndPassword( FBauth, email, password)
+    .then( (userCredential) => console.log(userCredential) )
+    .catch( (error) => console.log(error) )
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Register" component={RegisterScreen}/>
+        {/* <Stack.Screen name="Register" component={RegisterScreen}/> */}
+        <Stack.Screen name="Register">
+          { (props) => <RegisterScreen {...props} handler={ signUpHandler}/> }
+        </Stack.Screen>
         <Stack.Screen name="Home" component={HomeScreen}/>
         <Stack.Screen name="Login" component={LoginScreen}/>
       </Stack.Navigator>
