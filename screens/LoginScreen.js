@@ -1,23 +1,63 @@
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useState, useEffect } from 'react'
+import NativeAccessibilityManager from 'react-native/Libraries/Components/AccessibilityInfo/NativeAccessibilityManager'
 
 export function LoginScreen( props ){
+	const [email, setEmail] = useState('')
+	const [validEmail, setValidEmail] = useState(false)
+	const [password, setPassword] = useState('')
+	const [validPassword, setValidPassword] = useState( false )
+
 	const navigation = useNavigation()
+
+	const gotoRegister = () => {
+		navigation.navigate("Register")
+	}
+
+	useEffect(() => {
+		if(email.length > 5){
+			setValidEmail( true )
+		}
+		else{
+			setValidEmail( false )
+		}
+	},[email])
+
+	useEffect(() => {
+	   if (password.length >= 6 ){
+		   setValidPassword( true )
+	   }
+	   else{
+		   setValidPassword( false )
+	   }
+	},[password])
 
 	return (
 		<View style={ styles.homeScreen }>
 			<View style={styles.form}>
 				<Text style={ styles.title}>Sign in</Text>
 			<Text>Email</Text>
-			<TextInput style={ styles.input}/>
+			<TextInput 
+				style={ styles.input}
+				value={ email }
+				onChangeText = {(val) => setEmail(val) }	
+			/>
 			<Text>Password</Text>
-			<TextInput style={ styles.input} secureTextEntry={true} />
-			<TouchableOpacity style={ styles.button}>
-				<Text style={styles.buttonText}>Sign up</Text>
+			<TextInput 
+				style={ styles.input} 
+				secureTextEntry={true} 
+				value={ password }
+				onChangeText={(val) => setPassword(val) }
+			
+			/>
+			<TouchableOpacity 
+				style={ (validEmail && validPassword ) ? styles.button : styles.buttonDisabble}
+			>
+				<Text style={styles.buttonText}>Sign in</Text>
 			</TouchableOpacity>
-			<TouchableOpacity style={ styles.loginLink}>
-				<Text style={ styles.loginLinkText}>Already have an account? Sign in</Text>
+			<TouchableOpacity style={ styles.registerLink} onPress={ () => gotoRegister() }>
+				<Text style={ styles.registerLinkText}>Don't have an account? Sign up</Text>
 			</TouchableOpacity>
 			</View>
 		</View>
@@ -57,10 +97,14 @@ const styles = StyleSheet.create({
 		color: "white",
 		textAlign: "center",
 	},
-	loginLink: {
+	buttonDisabble:{
+		padding: 5,
+		backgroundColor: "#CCCCCC",
+	},
+	registerLink: {
 		marginVertical: 20,
 	},
-	loginLinkText: {
+	registerLinkText: {
 		textAlign: "center",
 	},
 })

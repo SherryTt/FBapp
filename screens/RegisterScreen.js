@@ -41,6 +41,13 @@ export function RegisterScreen( props ){
 		}
 	}, [ password ] )
 
+	useEffect( () => {
+		if( props.authStatus ){
+			navigation.navigate("Home")
+		}
+	}, [ props.authStatus ] )
+
+
 	return (
 		<View style={ styles.homeScreen }>
 			<View style={styles.form}>
@@ -63,6 +70,7 @@ export function RegisterScreen( props ){
 			<TouchableOpacity 
 				style={ (validEmail && validPassword ) ? styles.button : styles.buttonDisabble}
 				disabled={ (validEmail && validPassword ) ? false : true }
+				onPress={ () => signUpUser(email, password) }
 			>
 				<Text style={styles.buttonText}>Sign up</Text>
 			</TouchableOpacity>
