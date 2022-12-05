@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 //firebase
 import { firebaseConfig  } from './config/Config';
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { getAuth, signOut,signInWithEmailAndPassword,createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 //navigation
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -13,6 +13,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { HomeScreen } from './screens/HomeScreen';
 import { RegisterScreen } from './screens/RegisterScreen';
 import { LoginScreen } from './screens/LoginScreen';
+//component
+import { SignOut } from './components/SignOut';
 
 const FBapp = initializeApp(firebaseConfig);
 const FBauth = getAuth( FBapp );
@@ -41,6 +43,22 @@ export default function App() {
     .catch( (error) => console.log(error) )
   }
 
+//Function to sign in user
+const signInHandler = ( email, password ) => {
+  signInWithEmailAndPassword( FBauth, email, password )
+  .then( (userCredential) => console.log(userCredential))
+  .catch( (error) => console.log(error))
+}
+
+
+//function to sign out user
+const signOutHandler = () =>{
+  signOut( FBauth )
+  .then(() => console.log('signed out'))
+  .catch((error) => console.log())
+
+}
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -48,11 +66,19 @@ export default function App() {
         <Stack.Screen name="Register">
           { (props) => <RegisterScreen {...props} handler={ signUpHandler} authStatus={auth}/> }
         </Stack.Screen>
-        <Stack.Screen name="Home" component={HomeScreen}/>
-        <Stack.Screen name="Login" component={LoginScreen}/>
+        <Stack.Screen name="Login">
+        { (props) => <LoginScreen {...props} handler={signInHandler} authStatus={auth}/> }
+        </Stack.Screen>
+        <Stack.Screen name="Home" options={{
+                      headerTitle:"Home",
+                      headerRight: ( props ) => <SignOut {...props} handler={signOutHandler}/>
+                    }}>
+        { (props) => <HomeScreen {...props} authStatus={auth}/>}
+        </Stack.Screen>
+
       </Stack.Navigator>
     </NavigationContainer>
-  );
+  )
 }
 
 const styles = StyleSheet.create({

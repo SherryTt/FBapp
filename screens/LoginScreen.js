@@ -15,6 +15,10 @@ export function LoginScreen( props ){
 		navigation.navigate("Register")
 	}
 
+	const signInUser = ( email, password ) => {
+		props.handler(email,password)
+	}
+
 	useEffect(() => {
 		if(email.length > 5){
 			setValidEmail( true )
@@ -32,6 +36,13 @@ export function LoginScreen( props ){
 		   setValidPassword( false )
 	   }
 	},[password])
+
+	useEffect( () => {
+		if( props.authStatus ){
+			navigation.reset( {index: 0,  routes: [{name: "Home"}]} )
+		}
+	}, [ props.authStatus ] )
+
 
 	return (
 		<View style={ styles.homeScreen }>
@@ -53,6 +64,7 @@ export function LoginScreen( props ){
 			/>
 			<TouchableOpacity 
 				style={ (validEmail && validPassword ) ? styles.button : styles.buttonDisabble}
+				onPress={ () => signInUser(email,password)}
 			>
 				<Text style={styles.buttonText}>Sign in</Text>
 			</TouchableOpacity>
