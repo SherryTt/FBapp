@@ -1,13 +1,20 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useState, useEffect  } from 'react';
-//import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+//Navigation
+import { NavigationContainer, StackActions } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import {ListScreen} from './ListScreen'
+import { AddScreen } from './AddScreen';
+
+const Tab = createBottomTabNavigator()
+const Stack = createNativeStackNavigator()
 
 
 export function HomeScreen( props ){
 	const navigation = useNavigation()
-	
-	//const Tab = createBottomTabNavigator();
 
 	const pressHandler = () => {
 		navigation.navigate("Register")
@@ -22,12 +29,12 @@ export function HomeScreen( props ){
 
 
 	return (
-		<View>
-			<Text>Home</Text>
-			<TouchableOpacity style={styles.button} onPress={() => pressHandler()}>
-				<Text>Go to Register</Text>
-			</TouchableOpacity>
-		</View>
+	
+			<Tab.Navigator>
+				<Stack.Screen name="List" component={ ListScreen } listData={ props.data }/>
+				<Stack.Screen name="Add" component={ AddScreen } add={ props.add }/>
+			</Tab.Navigator>
+
 	)
 }
 
