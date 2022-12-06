@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TextInput, TouchableOpacity,Image } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useState, useEffect } from 'react'
 
@@ -78,6 +78,9 @@ export function RegisterScreen( props ){
 				<Text style={ styles.loginLinkText}>Already have an account? Sign in</Text>
 			</TouchableOpacity>
 			</View>
+			<Image style={styles.wineLogo}
+                    source={require("../assets/logo_trans.png")}
+                     />
 		</View>
 
 	)
@@ -85,39 +88,51 @@ export function RegisterScreen( props ){
 
 const styles = StyleSheet.create({
 	homeScreen: {
-		backgroundColor: "lightyellow",
+		backgroundColor: "#EEDBCD",
 		flex: 1,
 		display: "flex",
 		flexDirection: "column",
 	},
+	wineLogo:{
+		width:200,
+		height:200,
+		marginHorizontal: 90,
+	},
 	form:{
-		backgroundColor: "white",
 		padding: 10,
-		marginTop: 30,
 		marginHorizontal: 20,
+		marginTop:100,
 	},
 	title: {
 		fontSize: 20,
 		marginBottom: 10,
+		textAlign:'center',
+		marginBottom:40,
+		fontWeight:'bold',
+		textDecorationLine:1,
 	},
 	input: {
 		borderStyle: "solid",
+		backgroundColor: "#ffffff",
 		borderColor: "#cccccc",
 		borderWidth: 1,
 		padding: 5,
 		marginVertical: 5,
+		marginVertical:10,
 	},
 	button: {
 		padding: 5,
-		backgroundColor: "black",
-	},
-	buttonDisabble:{
-		padding: 5,
-		backgroundColor: "#CCCCCC",
+		marginTop:30,
+		backgroundColor: "#185C4D",
 	},
 	buttonText: {
 		color: "white",
 		textAlign: "center",
+	},
+	buttonDisabble:{
+		padding: 5,
+		marginTop:30,
+		backgroundColor: "#CCCCCC",
 	},
 	loginLink: {
 		marginVertical: 20,

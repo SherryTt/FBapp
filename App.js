@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View,Image } from 'react-native';
 //react
 import { useState, useEffect } from 'react';
 //firebase
@@ -14,7 +14,6 @@ import {
 //navigation
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 //firestore
 import { 
   getFirestore, 
@@ -29,8 +28,12 @@ import {
 import { HomeScreen } from './screens/HomeScreen';
 import { RegisterScreen } from './screens/RegisterScreen';
 import { LoginScreen } from './screens/LoginScreen';
+import { AddScreen } from './screens/AddScreen';
+import { DetailScreen } from './screens/DetailScreen';
+import { ListScreen } from './screens/ListScreen';
 //component
 import { SignOut } from './components/SignOut';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const FBapp = initializeApp(firebaseConfig);
 const FBauth = getAuth( FBapp );
@@ -50,6 +53,7 @@ export default function App() {
   useEffect(() => {
     if( startup === false && auth ) {
       getListData()
+    //  getUserData()
       setStartup( true )
     }
   }, [startup, auth])
@@ -59,7 +63,7 @@ export default function App() {
     if( user ){
       //user is signed in
       setAuth( user )
-      //console.log(user.uid)
+      console.log(user.uid)
     }
     else {
       setAuth( false )
@@ -110,25 +114,54 @@ const getListData = () => {
       listData.push( item )
     })
     setData( listData )
+   // console.log(listData)
+  })
+}
+
+const getUserData = () => {
+  if( !auth){
+    return
+  }
+  //Define collection
+  const path = "/users"
+  const q = query( collection(FBdb, path) )
+  const unsubscribe = onSnapshot( q,(querySnapshot) => {
+    let userData = []
+    querySnapshot.forEach((doc) =>{
+      let user = doc.data()
+      user.id = doc.id
+      userData.push( user )
+    })
+    setData( userData )
+   // console.log(listData)
   })
 }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
+    <NavigationContainer >
+      <Stack.Navigator >
         {/* <Stack.Screen name="Register" component={RegisterScreen}/> */}
-        <Stack.Screen name="Register">
+        <Stack.Screen name="Register" options={{
+                         headerShown:false,
+                     }}>
           { (props) => <RegisterScreen {...props} handler={ signUpHandler} authStatus={auth}/> }
         </Stack.Screen>
-        <Stack.Screen name="Login">
+        <Stack.Screen name="Login" options={{
+                       headerShown:false,
+                     }}>
         { (props) => <LoginScreen {...props} handler={signInHandler} authStatus={auth}/> }
         </Stack.Screen>
-        <Stack.Screen name="Home" options={{
-                      headerTitle:"Home",
-                      headerShown: false,
+        <Stack.Screen  name="Home" options={{
+                      headerTitle:"Winiest",
+                      headerTintColor:'#185C4D',
+                      headerStyle:{
+                        backgroundColor:'#EEDBCD',
+                      },
+                     // headerShown: false,
                       headerRight: ( props ) => <SignOut {...props} handler={signOutHandler}/>
                     }}>
         { (props) => <HomeScreen {...props} authStatus={auth} add={addToList} list={ data }/>}
+       
         </Stack.Screen>
 
       </Stack.Navigator>
@@ -137,10 +170,8 @@ const getListData = () => {
 }
 
 const styles = StyleSheet.create({
+
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#4d1426',
   },
 });

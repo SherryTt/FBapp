@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TextInput, TouchableOpacity,Image } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useState, useEffect } from 'react'
 import NativeAccessibilityManager from 'react-native/Libraries/Components/AccessibilityInfo/NativeAccessibilityManager'
@@ -47,7 +47,7 @@ export function LoginScreen( props ){
 	return (
 		<View style={ styles.homeScreen }>
 			<View style={styles.form}>
-				<Text style={ styles.title}>Sign in</Text>
+			<Text style={ styles.title}>Sign in</Text>
 			<Text>Email</Text>
 			<TextInput 
 				style={ styles.input}
@@ -72,6 +72,9 @@ export function LoginScreen( props ){
 				<Text style={ styles.registerLinkText}>Don't have an account? Sign up</Text>
 			</TouchableOpacity>
 			</View>
+			<Image style={styles.wineLogo}
+                    source={require("../assets/logo_trans.png")}
+                     />
 		</View>
 
 	)
@@ -79,31 +82,43 @@ export function LoginScreen( props ){
 
 const styles = StyleSheet.create({
 	homeScreen: {
-		backgroundColor: "lightyellow",
+		backgroundColor: "#EEDBCD",
 		flex: 1,
 		display: "flex",
 		flexDirection: "column",
 	},
+	wineLogo:{
+		width:200,
+		height:200,
+		marginHorizontal: 90,
+	},
 	form:{
-		backgroundColor: "white",
 		padding: 10,
-		marginTop: 30,
 		marginHorizontal: 20,
+		marginTop:100,
 	},
 	title: {
 		fontSize: 20,
 		marginBottom: 10,
+		textAlign:'center',
+		marginBottom:40,
+		fontWeight:'bold',
+		textDecorationLine:1,
+	
 	},
 	input: {
 		borderStyle: "solid",
+		backgroundColor: "#ffffff",
 		borderColor: "#cccccc",
 		borderWidth: 1,
 		padding: 5,
 		marginVertical: 5,
+		marginVertical:10,
 	},
 	button: {
 		padding: 5,
-		backgroundColor: "black",
+		marginTop:30,
+		backgroundColor: "#185C4D",
 	},
 	buttonText: {
 		color: "white",
@@ -111,6 +126,7 @@ const styles = StyleSheet.create({
 	},
 	buttonDisabble:{
 		padding: 5,
+		marginTop:30,
 		backgroundColor: "#CCCCCC",
 	},
 	registerLink: {
