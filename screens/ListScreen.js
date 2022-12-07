@@ -2,6 +2,7 @@ import { View,Text , FlatList, Image, TouchableHighlight, StyleSheet} from "reac
 import {useState, useEffect} from 'react'
 import { NavigationContainer, useNavigation } from '@react-navigation/native'
 import { Separator } from '../components/Separator';
+import { Button, TextInput } from "react-native-web";
 
 
 export function ListScreen( props ) {
@@ -22,13 +23,10 @@ export function ListScreen( props ) {
     ) 
 */
 
-const clickHandler = (data) => {
-    navigation.navigate('Detail', data)
-  }
   
 	const renderRow = ({ item }) => {
 		return (
-
+		
 		  <TouchableHighlight onPress={()=> {navigation.navigate('Detail',item)}}>
 		  <View style={styles.list}>
 		   <Image 
@@ -40,12 +38,14 @@ const clickHandler = (data) => {
 			<Text style={styles.titleText}>{item.country}</Text>
 			</View>
 			</View>
-		  </TouchableHighlight>
+		    </TouchableHighlight>
 		);
 		}
 
 	return(
+		
 		<View style={styles.container}>
+		
 		<FlatList 
 			data={ list } 
 			renderItem={renderRow}
@@ -68,6 +68,15 @@ const styles =StyleSheet.create({
 	  },
 	detailText:{
 		alignSelf:"center",
+	},
+	input:{
+			borderStyle: "solid",
+			backgroundColor: "#ffffff",
+			borderColor: "#cccccc",
+			borderWidth: 1,
+			padding: 5,
+			marginVertical: 5,
+			marginVertical:10,
 	},
 	titleText:{
 		fontSize:17,

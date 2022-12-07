@@ -22,7 +22,8 @@ import {
   collection,
   addDoc,
   onSnapshot,
-  query
+  query,
+  where,
 } from 'firebase/firestore';
 //screen
 import { HomeScreen } from './screens/HomeScreen';
@@ -35,11 +36,11 @@ import { ListScreen } from './screens/ListScreen';
 import { SignOut } from './components/SignOut';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
+
+//Function
 const FBapp = initializeApp(firebaseConfig);
 const FBauth = getAuth( FBapp );
 const FBdb = getFirestore( FBapp );
-
-
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -47,16 +48,18 @@ export default function App() {
   const [auth,setAuth] = useState()
   // state to keep track of data from Firebase
   const [ data, setData ] = useState([])
+   // state to keep track of data from Firebase
+   const [ search, setSearch ] = useState([])
   //state to control data fetching
   const [ startup, setStartup ] = useState(false)
   // get data on startup
   useEffect(() => {
     if( startup === false && auth ) {
       getListData()
-    //  getUserData()
       setStartup( true )
     }
   }, [startup, auth])
+
 
   //firebase observer for user's authentication status
   onAuthStateChanged( FBauth, (user) => {
@@ -98,6 +101,29 @@ const addToList = async ( data ) => {
   const path = "users/" + auth.uid + "/list"
   const docRef = await addDoc( collection(FBdb, path),data)
 }
+
+/*
+//Function to search list
+const searchByName = (text) =>{
+  if( !auth){
+    return
+  }
+  //Define collection
+  const path = "users/" + auth.uid + "/list"
+  const q = query( collection(FBdb, path),where("name" == text ) )
+  const unsubscribe = onSnapshot( q,(querySnapshot) => {
+    let listData = []
+    querySnapshot.forEach((doc) =>{
+      let item = doc.data()
+      item.id = doc.id
+      listData.push( item )
+    })
+    setSearch( listData )
+   // console.log(listData)
+  })
+}
+*/
+
 
 const getListData = () => {
   if( !auth){
@@ -151,8 +177,8 @@ const getUserData = () => {
                      }}>
         { (props) => <LoginScreen {...props} handler={signInHandler} authStatus={auth}/> }
         </Stack.Screen>
-        <Stack.Screen  name="Home" options={{
-                      headerTitle:"Winiest",
+        <Stack.Screen name="Home" options={{
+                      headerTitle:"Wine List",
                       headerTintColor:'#185C4D',
                       headerStyle:{
                         backgroundColor:'#EEDBCD',
@@ -161,7 +187,17 @@ const getUserData = () => {
                       headerRight: ( props ) => <SignOut {...props} handler={signOutHandler}/>
                     }}>
         { (props) => <HomeScreen {...props} authStatus={auth} add={addToList} list={ data }/>}
-       
+        </Stack.Screen>
+        <Stack.Screen name="Detail" options={{
+                      headerTitle:"Wine Detail",
+                      headerTintColor:'#185C4D',
+                      headerStyle:{
+                        backgroundColor:'#EEDBCD',
+                      },
+                     // headerShown: false,
+                      headerRight: ( props ) => <SignOut {...props} handler={signOutHandler}/>
+                    }}>
+        { (props) => <DetailScreen {...props} authStatus={auth} llist={data}/>}
         </Stack.Screen>
 
       </Stack.Navigator>

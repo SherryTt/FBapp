@@ -10,6 +10,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {ListScreen} from './ListScreen'
 import { AddScreen } from './AddScreen';
 import { AccountScreen } from './AccountScreen';
+import { AuthCredential } from 'firebase/auth';
 
 
 const Tab = createBottomTabNavigator()
@@ -75,7 +76,7 @@ export function HomeScreen( props ){
 					   )
 					}
 					}} >   
-					{ (props) => <AccountScreen {...props} userData={ userData } /> }
+					{ (props) => <AccountScreen {...props} userData={userData } /> }
 				</Stack.Screen>
 			</Tab.Navigator>
 
