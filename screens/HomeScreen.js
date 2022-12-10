@@ -10,6 +10,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {ListScreen} from './ListScreen'
 import { AddScreen } from './AddScreen';
 import { AccountScreen } from './AccountScreen';
+import { DetailScreen } from './DetailScreen';
 import { AuthCredential } from 'firebase/auth';
 
 
@@ -44,37 +45,32 @@ export function HomeScreen( props ){
 
 
 	return (
-	
-			<Tab.Navigator style={styles.tabBar}>
-				 <Stack.Screen name="List" style={styles.barTitle} options={{
-					 headerShown:false,
-					 tabBarIcon:(tabInfo)=>{
+		<Tab.Navigator style={styles.tabBar}>
+			<Stack.Screen name="List" style={styles.barTitle} options={{
+					headerShown:false,
+					tabBarIcon:(tabInfo)=>{
 						return(
 						<Ionicons name='md-wine' size={25}  color={'#185C4D'}/>
-					   )
-					}
-					 }}>
-                    { (props) => <ListScreen {...props} data={ listData } /> }
-                </Stack.Screen>
+					)}
+					}}>
+            { (props) => <ListScreen {...props} data={ listData } /> }
+            </Stack.Screen>
 
-
-				<Stack.Screen name="Add"  style={styles.barTitle}  options={{
+			<Stack.Screen name="Add"  style={styles.barTitle}  options={{
 					headerShown:false,
 					tabBarIcon:(tabInfo)=>{
 						return(
 						<Ionicons name='md-add' size={25} color={'#185C4D'}/>
-					   )
-					}
-					}} component={ AddScreen } add={ props.add }/>
+					)}
+			}} component={ AddScreen } add={ props.add }/>
 
 
-				<Stack.Screen name="Account"  style={styles.barTitle}  options={{
+			<Stack.Screen name="Account"  style={styles.barTitle}  options={{
 					headerShown:false,
 					tabBarIcon:(tabInfo)=>{
 						return(
 						<Ionicons name='md-person' size={25} color={'#185C4D'}/>
-					   )
-					}
+					)}
 					}} >   
 					{ (props) => <AccountScreen {...props} userData={userData } /> }
 				</Stack.Screen>

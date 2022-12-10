@@ -1,8 +1,7 @@
-import { View,Text , FlatList, Image, TouchableHighlight, StyleSheet} from "react-native";
+import { View,Text, FlatList, Image, TouchableHighlight, StyleSheet} from "react-native";
 import {useState, useEffect} from 'react'
-import { NavigationContainer, useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import { Separator } from '../components/Separator';
-import { Button, TextInput } from "react-native-web";
 
 
 export function ListScreen( props ) {
@@ -24,10 +23,9 @@ export function ListScreen( props ) {
 */
 
   
-	const renderRow = ({ item }) => {
-		return (
-		
-		  <TouchableHighlight onPress={()=> {navigation.navigate('Detail',item)}}>
+const renderRow = ({ item }) => {
+	return (	
+	    <TouchableHighlight onPress={()=> {navigation.navigate('Detail',item)}}>
 		  <View style={styles.list}>
 		   <Image 
 				style={{width:90, height: 150}}
@@ -38,20 +36,17 @@ export function ListScreen( props ) {
 			<Text style={styles.titleText}>{item.country}</Text>
 			</View>
 			</View>
-		    </TouchableHighlight>
-		);
-		}
+		</TouchableHighlight>
+	);}
 
 	return(
-		
 		<View style={styles.container}>
-		
-		<FlatList 
-			data={ list } 
-			renderItem={renderRow}
-			ItemSeparatorComponent={Separator}
-			keyExtractor={item => item.id}/>
-	</View>
+			<FlatList 
+				data={ list } 
+				renderItem={renderRow}
+				ItemSeparatorComponent={Separator}
+				keyExtractor={item => item.id}/>
+		</View>
 	)
 }
 
