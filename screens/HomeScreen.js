@@ -10,7 +10,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {ListScreen} from './ListScreen'
 import { AddScreen } from './AddScreen';
 import { AccountScreen } from './AccountScreen';
-import { DetailScreen } from './DetailScreen';
 import { AuthCredential } from 'firebase/auth';
 
 
@@ -19,6 +18,7 @@ const Stack = createNativeStackNavigator()
 
 
 export function HomeScreen( props ){
+
 	const [listData,setListData] = useState()
 	const [userData,setUserData] = useState()
 
@@ -45,23 +45,24 @@ export function HomeScreen( props ){
 
 
 	return (
+		
 		<Tab.Navigator style={styles.tabBar}>
 			<Stack.Screen name="List" style={styles.barTitle} options={{
-					headerShown:false,
-					tabBarIcon:(tabInfo)=>{
-						return(
-						<Ionicons name='md-wine' size={25}  color={'#185C4D'}/>
-					)}
-					}}>
-            { (props) => <ListScreen {...props} data={ listData } /> }
-            </Stack.Screen>
+				headerShown:false,
+				//tabBarStyle:{backgroundColor:''},
+				tabBarIcon:(tabInfo)=>{
+					return(
+					<Ionicons name='md-wine' size={25}  color={'#185C4D'} />)}
+
+				}}>
+        	{ (props) => <ListScreen {...props} data={ listData } /> }
+			</Stack.Screen>
 
 			<Stack.Screen name="Add"  style={styles.barTitle}  options={{
-					headerShown:false,
-					tabBarIcon:(tabInfo)=>{
-						return(
-						<Ionicons name='md-add' size={25} color={'#185C4D'}/>
-					)}
+				headerShown:false,
+				tabBarIcon:(tabInfo)=>{
+					return(
+					<Ionicons name='md-add' size={25} color={'#185C4D'}/>)}
 			}} component={ AddScreen } add={ props.add }/>
 
 
@@ -69,10 +70,8 @@ export function HomeScreen( props ){
 					headerShown:false,
 					tabBarIcon:(tabInfo)=>{
 						return(
-						<Ionicons name='md-person' size={25} color={'#185C4D'}/>
-					)}
-					}} >   
-					{ (props) => <AccountScreen {...props} userData={userData } /> }
+						<Ionicons name='md-person' size={25} color={'#185C4D'}/>)}
+					}}>{ (props) => <AccountScreen {...props} userData={userData } /> }
 				</Stack.Screen>
 			</Tab.Navigator>
 

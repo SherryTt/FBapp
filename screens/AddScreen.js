@@ -2,8 +2,10 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-nativ
 import {useState, useEffect} from 'react'
 import { Button } from 'react-native-web'
 
+
 export function AddScreen ( props ) {
 	const [ data, setData ] = useState([])
+	const [auth, setAuth] = useState()
 
     useEffect( () => {
         console.log( props.data )
@@ -11,10 +13,10 @@ export function AddScreen ( props ) {
     })
 
 	//function to add to user list
-const addToList = async ( data ) => {
-	const path = "users/" + auth.uid + "/list"
-	const docRef = await addDoc( collection(FBdb, path),data)
-  }
+	const addToList = async ( data ) => {
+		const path = "users/" + auth.uid + "/list"
+		const docRef = await addDoc( collection(FBdb, path),data)
+	  }
 
 	return (
 		<View style={styles.container}>
@@ -78,7 +80,7 @@ const addToList = async ( data ) => {
 		
 			<TouchableOpacity 
 				style={ styles.button}
-				onPress={ () => addToList(data)}
+				onPress={props.add}
 			>
 				<Text style={styles.buttonText}>Add wine list</Text>
 			</TouchableOpacity>

@@ -18,12 +18,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
   getFirestore,
   doc,
-  setDoc,
   collection,
   addDoc,
   onSnapshot,
   query,
   where,
+  updateDoc,
+  deleteField,
 } from 'firebase/firestore';
 //screen
 import { HomeScreen } from './screens/HomeScreen';
@@ -101,6 +102,14 @@ export default function App() {
     const docRef = await addDoc(collection(FBdb, path), data)
   }
 
+  //function to delete list
+  const deleteToList = async (data) => {
+    const path = "user/" + auth.uid + "/list"
+    const docRef = doc(FBdb,path)
+    await updateDoc(docRef,{id:deleteField()
+    })
+  }
+
   /*
   //Function to search list
   const searchByName = (text) =>{
@@ -166,16 +175,21 @@ export default function App() {
     <NavigationContainer >
       <Stack.Navigator >
         {/* <Stack.Screen name="Register" component={RegisterScreen}/> */}
+        
         <Stack.Screen name="Register" options={{
           headerShown: false,
         }}>
           {(props) => <RegisterScreen {...props} handler={signUpHandler} authStatus={auth} />}
         </Stack.Screen>
+
+
         <Stack.Screen name="Login" options={{
           headerShown: false,
         }}>
           {(props) => <LoginScreen {...props} handler={signInHandler} authStatus={auth} />}
         </Stack.Screen>
+
+
         <Stack.Screen name="Home" options={{
           headerTitle: "Wine List",
           headerTintColor: '#185C4D',
@@ -187,6 +201,8 @@ export default function App() {
         }}>
           {(props) => <HomeScreen {...props} authStatus={auth} add={addToList} list={data} />}
         </Stack.Screen>
+
+
         <Stack.Screen name="Detail" options={{
           headerTitle: "Wine Detail",
           headerTintColor: '#185C4D',
@@ -196,7 +212,19 @@ export default function App() {
           // headerShown: false,
           headerRight: (props) => <SignOut {...props} handler={signOutHandler} />
         }}>
-          {(props) => <DetailScreen {...props} authStatus={auth} list={data} />}
+          {(props) => <DetailScreen {...props} authStatus={auth} detail={deleteToList} list={data} />}
+        </Stack.Screen>
+
+        <Stack.Screen name="Add" options={{
+          headerTitle: "Add new wine",
+          headerTintColor: '#185C4D',
+          headerStyle: {
+          backgroundColor: '#EEDBCD',
+          },
+          // headerShown: false,
+          headerRight: (props) => <SignOut {...props} handler={signOutHandler} />
+        }}>
+          {(props) => <AddScreen {...props} authStatus={auth} list={data} />}
         </Stack.Screen>
 
       </Stack.Navigator>

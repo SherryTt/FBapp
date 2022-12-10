@@ -4,6 +4,10 @@ import {useState, useEffect} from 'react'
 
 export function AccountScreen ( props ) {
 
+	const route = useRoute()
+  const { name,userPhoto,email } = route.params
+
+
 const [ user, setUser ] = useState([])
 
 useEffect( () => {
@@ -20,10 +24,10 @@ return (
 	 <View>
 		<Image
 			style={{width:90, height: 150}}
-						source= {{uri:user.userPhoto}}
+						source= {{uri:userPhoto}}
 					/>
-		<Text>{user.name}</Text>
-		<Text>{user.email}</Text>
+		<Text>{name}</Text>
+		<Text>{email}</Text>
 	</View>
 </View>
 )
