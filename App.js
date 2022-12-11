@@ -152,24 +152,7 @@ export default function App() {
     })
   }
 
-  const getUserData = () => {
-    if (!auth) {
-      return
-    }
-    //Define collection
-    const path = "/users"
-    const q = query(collection(FBdb, path))
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      let userData = []
-      querySnapshot.forEach((doc) => {
-        let user = doc.data()
-        user.id = doc.id
-        userData.push(user)
-      })
-      setData(userData)
-      // console.log(listData)
-    })
-  }
+
 
   return (
     <NavigationContainer >

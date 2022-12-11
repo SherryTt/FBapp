@@ -9,8 +9,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import {ListScreen} from './ListScreen'
 import { AddScreen } from './AddScreen';
-import { AccountScreen } from './AccountScreen';
-import { AuthCredential } from 'firebase/auth';
 
 
 const Tab = createBottomTabNavigator()
@@ -65,14 +63,6 @@ export function HomeScreen( props ){
 					<Ionicons name='md-add' size={25} color={'#185C4D'}/>)}
 			}} component={ AddScreen } add={ props.add }/>
 
-
-			<Stack.Screen name="Account"  style={styles.barTitle}  options={{
-					headerShown:false,
-					tabBarIcon:(tabInfo)=>{
-						return(
-						<Ionicons name='md-person' size={25} color={'#185C4D'}/>)}
-					}}>{ (props) => <AccountScreen {...props} userData={userData } /> }
-				</Stack.Screen>
 			</Tab.Navigator>
 
 	)
