@@ -32,6 +32,7 @@ export function DetailScreen( props ) {
 const styles = StyleSheet.create({
   container:{
     backgroundColor:'#EEDBCD',
+    height:"100%",
   },
 	cardBox:{
     backgroundColor:'#EEDBCD',
