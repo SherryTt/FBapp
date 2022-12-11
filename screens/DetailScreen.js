@@ -1,18 +1,8 @@
 import { View, Text, StyleSheet, Image} from 'react-native'
 import { useRoute } from '@react-navigation/native'
 import { Button, Card, Title } from 'react-native-paper'
-import { doc, updateDoc, deleteField} from 'firebase/firestore';
-import { useContext } from 'react';
+import { TouchableOpacity } from 'react-native-web'
 
-
-
-
-  //function to delete to user list
-  const deleteToList = async (data) => {
-    const path = "user/" + auth.uid + "/list"
-    const docRef = doc(FBdb,path)
-    await updateDoc(docRef,{id:deleteField()})
-  }
 
 export function DetailScreen( props ) {
   const route = useRoute()
@@ -35,9 +25,6 @@ export function DetailScreen( props ) {
       </Card.Content>
     </Card>
 
-    <Button onPress={() => deleteToList(id)}>
-      delete
-    </Button>
   </View> 
   )
 }

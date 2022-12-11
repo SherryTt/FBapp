@@ -13,14 +13,6 @@ export function ListScreen( props ) {
         console.log( props.data )
         setList(props.data)
     })
-/*
-    const renderer = ({item}) => (
-        <View>
-            <Text>{item.name}</Text>
-			<Text>{item.year}</Text>
-        </View>
-    ) 
-*/
 
   
 const renderRow = ({ item }) => {

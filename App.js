@@ -101,16 +101,14 @@ export default function App() {
     const path = "users/" + auth.uid + "/list"
     const docRef = await addDoc(collection(FBdb, path), data)
   }
-
+/*
   //function to delete list
-  const deleteToList = async (data) => {
+  const deleteFromList = async (data) => {
     const path = "user/" + auth.uid + "/list"
-    const docRef = doc(FBdb,path)
-    await updateDoc(docRef,{id:deleteField()
-    })
-  }
+    const docRef = doc(FBdb,list)
+    await deleteDoc(doc(FBdb,path,ths.id == id))
+    }
 
-  /*
   //Function to search list
   const searchByName = (text) =>{
     if( !auth){
@@ -195,7 +193,7 @@ export default function App() {
           // headerShown: false,
           headerRight: (props) => <SignOut {...props} handler={signOutHandler} />
         }}>
-          {(props) => <DetailScreen {...props} authStatus={auth} detail={deleteToList} list={data} />}
+          {(props) => <DetailScreen {...props} authStatus={auth} list={data} />}
         </Stack.Screen>
 
         <Stack.Screen name="Add" options={{
